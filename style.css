@@ -1,0 +1,149 @@
+/* === Global Styles === */
+body {
+    background: linear-gradient(to right, #8360c3, #2ebf91);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* === Container === */
+#container {
+    width: 90%;
+    max-width: 450px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* === Chat Box === */
+#chat-box {
+    width: 100%;
+    height: 500px;
+    overflow-y: auto;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+                inset -5px -5px 10px rgba(255, 255, 255, 0.7);
+}
+
+/* === Pesan === */
+.message {
+    max-width: 75%;
+    padding: 12px 15px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 5px 0;
+    word-wrap: break-word;
+    transition: 0.3s ease;
+}
+
+/* === Pesan Terkirim === */
+.sent {
+    background: #a778ca;
+    color: white;
+    align-self: flex-end;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* === Pesan Diterima === */
+.received {
+    background: #ffffff;
+    color: #333;
+    align-self: flex-start;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* === Waktu Pesan === */
+.time-stamp {
+    font-size: 10px;
+    color: #000000;
+    display: block;
+    margin-top: 5px;
+}
+
+/* === Input Area === */
+#input-area {
+    display: flex;
+    width: 100%;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+#input-box {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    outline: none;
+}
+
+/* === Tombol Modern === */
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* === Tombol Kirim === */
+#send-btn {
+    background: #2ebf91;
+    color: white;
+}
+
+#send-btn:hover {
+    background: #27a882;
+    transform: scale(1.05);
+}
+
+/* === Tombol Ganti Nama === */
+#change-name-btn {
+    background: #ffcc00;
+    color: black;
+    margin-bottom: 10px;
+}
+
+#change-name-btn:hover {
+    background: #e6b800;
+    transform: scale(1.05);
+}
+
+/* === Tombol Hapus Chat === */
+#clear-chat-btn {
+    background: #ff4d4d;
+    color: white;
+    margin-bottom: 15px;
+}
+
+#clear-chat-btn:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
+
+/* === Logo === */
+#logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
