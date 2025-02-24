@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talkadoo</title>
+    <link rel="icon" type="image/jpeg" href="talkadoo.jpeg">
+    <link rel="stylesheet" href="chat.css">
+    <script type="module" src="app.js"></script>
+    <script type="module" src="auth.js"></script>
+</head>
+<body>
+
+    <div id="container">
+        <!-- Logo -->
+        <img src="talkadoo.jpeg" alt="Talkadoo Logo" id="logo">
+
+        <h2>Talkadoo</h2>
+        <button id="change-name-btn">Ganti Nama</button>
+        <button id="clear-chat-btn">Hapus Semua Chat</button>
+        <button id="logout-btn">Logout</button>
+
+        <div id="chat-box"></div>
+
+        <div id="input-area">
+            <input type="text" id="input-box" placeholder="Ketik pesan...">
+            <button id="send-btn">Kirim</button>
+        </div>
+    </div>
+
+</body>
+</html>

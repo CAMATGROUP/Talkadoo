@@ -1,0 +1,200 @@
+/* === Global Styles === */
+body {
+    background: linear-gradient(to right, #8360c3, #2ebf91);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* === Container === */
+#container {
+    width: 100%;
+    max-width: 500px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* === Chat Box === */
+#chat-box {
+    width: 100%;
+    height: 50vh;
+    max-height: 500px;
+    overflow-y: auto;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+                inset -5px -5px 10px rgba(255, 255, 255, 0.7);
+    margin-bottom: 15px;
+}
+
+/* === Pesan === */
+.message {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 1rem;
+    line-height: 1.4;
+    margin: 5px 0;
+    word-wrap: break-word;
+}
+
+/* === Pesan Terkirim === */
+.sent {
+    background: #a778ca;
+    color: white;
+    align-self: flex-end;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* === Pesan Diterima === */
+.received {
+    background: #ffffff;
+    color: #333;
+    align-self: flex-start;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* === Waktu Pesan === */
+.time-stamp {
+    font-size: 0.75rem;
+    color: #000000;
+    display: block;
+    margin-top: 8px;
+}
+
+/* === Input Area === */
+#input-area {
+    display: flex;
+    width: 100%;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+#input-box {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.1),
+                inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    outline: none;
+}
+
+/* === Tombol Modern === */
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Tombol memiliki lebar yang sama */
+    max-width: 250px;
+    text-align: center;
+}
+
+/* === Tombol Kirim === */
+#send-btn {
+    background: #2ebf91;
+    color: white;
+    max-width: 80px; /* Membuat tombol lebih kecil */
+    padding: 8px; /* Mengurangi padding agar tidak terlalu besar */
+    font-size: 0.9rem; /* Menyesuaikan ukuran teks */
+}
+
+#send-btn:hover {
+    background: #27a882;
+    transform: scale(1.05);
+}
+
+
+/* === Tombol Ganti Nama === */
+#change-name-btn {
+    background: #ffcc00;
+    color: black;
+    margin-top: 5px;
+    max-width: 200px;
+    border-radius: 20px;
+}
+
+#change-name-btn:hover {
+    background: #e6b800;
+    transform: scale(1.05);
+}
+
+/* === Tombol Hapus Chat === */
+#clear-chat-btn {
+    background: #ff4d4d;
+    color: white;
+    margin-top: 10px;
+    max-width: 200px;
+    border-radius: 20px;
+}
+
+#clear-chat-btn:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
+
+/* === Tombol Logout === */
+#logout-btn {
+    background: #ff0606;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    max-width: 200px;
+    border-radius: 20px;
+}
+
+#logout-btn:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
+
+/* === Logo === */
+#logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* === Media Query untuk Responsivitas === */
+@media (max-width: 600px) {
+    #container {
+        padding: 15px;
+    }
+    
+    #chat-box {
+        height: 60vh;
+        max-height: none;
+    }
+
+    #input-box {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+}
