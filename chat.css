@@ -51,13 +51,18 @@ body {
     line-height: 1.4;
     margin: 5px 0;
     word-wrap: break-word;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* Teks sejajar ke kiri */
+    transition: transform 0.2s ease-in-out;
 }
 
 /* === Pesan Terkirim === */
 .sent {
     background: #a778ca;
-    color: white;
-    align-self: flex-end;
+    color: rgb(255, 255, 255);
+    align-self: flex-end; /* Pesan terkirim di sebelah kanan */
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -65,7 +70,7 @@ body {
 .received {
     background: #ffffff;
     color: #333;
-    align-self: flex-start;
+    align-self: flex-start; /* Pesan diterima di sebelah kiri */
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
 }
 
@@ -74,7 +79,9 @@ body {
     font-size: 0.75rem;
     color: #000000;
     display: block;
-    margin-top: 8px;
+    margin-top: 5px;
+    text-align: right; /* Waktu pesan sejajar ke kanan */
+    opacity: 1;
 }
 
 /* === Input Area === */
@@ -124,7 +131,6 @@ button {
     background: #27a882;
     transform: scale(1.05);
 }
-
 
 /* === Tombol Ganti Nama === */
 #change-name-btn {
@@ -176,6 +182,12 @@ button {
     margin-bottom: 10px;
     border-radius: 10px;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#logo:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* === Media Query untuk Responsivitas === */
@@ -220,4 +232,115 @@ button {
     border-radius: 5px;
     margin: 5px 0;
     font-weight: bold;
+}
+
+#typing-indicator {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+/* Styling untuk Pesan Balasan */
+.reply-text {
+    font-size: 0.8rem;
+    color: #000000;
+    margin-bottom: 5px;
+    font-style: italic;
+    border-left: 2px solid #6a11cb;
+    padding-left: 8px;
+}
+
+/* === Styling untuk Reply Preview === */
+#reply-preview {
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    max-width: 100%; /* Membatasi lebar maksimum */
+    overflow: hidden; /* Menyembunyikan teks yang melebihi container */
+}
+
+#reply-preview strong {
+    color: #6a11cb;
+    white-space: nowrap; /* Mencegah teks strong wrap */
+}
+
+#reply-preview p {
+    margin: 0;
+    flex: 1; /* Mengisi sisa ruang yang tersedia */
+    white-space: nowrap; /* Mencegah teks wrap */
+    overflow: hidden; /* Menyembunyikan teks yang melebihi container */
+    text-overflow: ellipsis; /* Menambahkan "..." jika teks terlalu panjang */
+}
+
+#cancel-reply-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    flex-shrink: 0; /* Mencegah tombol menyusut */
+}
+
+#cancel-reply-btn:hover {
+    background: #cc0000;
+}
+
+/* === Tanda Pesan dengan Balasan === */
+.message.has-reply {
+    border-left: 4px solid #6a11cb;
+    padding-left: 10px;
+}
+
+/* === Animasi Logo === */
+@keyframes logoFloat {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+#logo:hover {
+    animation: logoFloat 2s ease-in-out infinite;
+}
+
+/* === Animasi untuk Pengguna Online === */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+#users-list li {
+    padding: 8px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    margin: 5px 0;
+    font-weight: bold;
+    animation: float 3s ease-in-out infinite; /* Animasi float selama 3 detik, berulang terus */
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Efek hover untuk item pengguna online */
+#users-list li:hover {
+    background-color: #d0d0d0;
+    animation-play-state: paused; /* Menghentikan animasi saat hover */
 }
