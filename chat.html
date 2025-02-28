@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="chat.css">
     <script type="module" src="app.js"></script>
     <script type="module" src="auth.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
 </head>
 <body>
 
@@ -22,9 +23,6 @@
             <h3>Pengguna Online</h3>
             <ul id="users-list"></ul>
         </div>
-        
-        <div id="typing-indicator"></div>
-
         <button id="change-name-btn">Ganti Nama</button>
         <button id="clear-chat-btn">Hapus Semua Chat</button>
         <button id="logout-btn">Logout</button>
@@ -33,7 +31,9 @@
         <div id="chat-box" style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto;">
             <p>Memuat pesan...</p>
         </div>
-    
+
+        <div id="typing-indicator"></div>
+        
         <!-- Input Pesan -->
         <div id="input-area">
             <div id="reply-preview" style="display: none;">
@@ -42,6 +42,8 @@
                 <button id="cancel-reply-btn">Batal</button>
             </div>
             <input type="text" id="input-box" placeholder="Ketik pesan...">
+            <button id="emoji-btn">😀</button>
+            <emoji-picker id="emoji-picker"></emoji-picker>
             <button id="send-btn">Kirim</button>
         </div>
     </div>
