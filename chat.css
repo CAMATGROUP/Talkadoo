@@ -9,6 +9,26 @@ body {
     font-family: 'Poppins', sans-serif;
     padding: 10px;
     box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* === Custom Scroll Bar for Body === */
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #a778ca;
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #8360c3;
 }
 
 /* === Container === */
@@ -24,6 +44,13 @@ body {
     align-items: center;
     text-align: center;
     box-sizing: border-box;
+    margin: 20px 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* === Chat Box === */
@@ -40,9 +67,29 @@ body {
     box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
                 inset -5px -5px 10px rgba(255, 255, 255, 0.7);
     margin-bottom: 15px;
+    animation: slideIn 0.5s ease-in-out;
 }
 
-/* === Pesan === */
+/* === Custom Scroll Bar === */
+#chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chat-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#chat-box::-webkit-scrollbar-thumb {
+    background: #a778ca;
+    border-radius: 10px;
+}
+
+#chat-box::-webkit-scrollbar-thumb:hover {
+    background: #8360c3;
+}
+
+/* === Messages === */
 .message {
     max-width: 80%;
     padding: 10px 14px;
@@ -54,34 +101,36 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    text-align: left; /* Teks sejajar ke kiri */
-    transition: transform 0.2s ease-in-out;
+    text-align: left;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: messageAppear 0.3s ease-in-out forwards;
 }
 
-/* === Pesan Terkirim === */
+@keyframes messageAppear {
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .sent {
     background: #a778ca;
-    color: rgb(255, 255, 255);
-    align-self: flex-end; /* Pesan terkirim di sebelah kanan */
+    color: white;
+    align-self: flex-end;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* === Pesan Diterima === */
 .received {
     background: #ffffff;
     color: #333;
-    align-self: flex-start; /* Pesan diterima di sebelah kiri */
+    align-self: flex-start;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* === Waktu Pesan === */
 .time-stamp {
     font-size: 0.75rem;
     color: #000000;
-    display: block;
     margin-top: 5px;
-    text-align: right; /* Waktu pesan sejajar ke kanan */
-    opacity: 1;
+    text-align: right;
 }
 
 /* === Input Area === */
@@ -90,6 +139,12 @@ body {
     width: 100%;
     margin-top: 15px;
     gap: 10px;
+    animation: slideUp 0.5s ease-in-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 #input-box {
@@ -101,9 +156,15 @@ body {
                 inset -3px -3px 6px rgba(255, 255, 255, 0.7);
     font-size: 1rem;
     outline: none;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
-/* === Tombol Modern === */
+#input-box:focus {
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+                inset -5px -5px 10px rgba(255, 255, 255, 0.7);
+}
+
+/* === Buttons === */
 button {
     padding: 12px;
     border: none;
@@ -113,18 +174,24 @@ button {
     font-weight: bold;
     transition: all 0.3s ease-in-out;
     box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
-    width: 100%; /* Tombol memiliki lebar yang sama */
+    width: 100%;
     max-width: 250px;
     text-align: center;
+    animation: buttonPop 0.3s ease-in-out;
 }
 
-/* === Tombol Kirim === */
+@keyframes buttonPop {
+    0% { transform: scale(0.9); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
 #send-btn {
     background: #2ebf91;
     color: white;
-    max-width: 80px; /* Membuat tombol lebih kecil */
-    padding: 8px; /* Mengurangi padding agar tidak terlalu besar */
-    font-size: 0.9rem; /* Menyesuaikan ukuran teks */
+    max-width: 80px;
+    padding: 8px;
+    font-size: 0.9rem;
 }
 
 #send-btn:hover {
@@ -132,7 +199,6 @@ button {
     transform: scale(1.05);
 }
 
-/* === Tombol Ganti Nama === */
 #change-name-btn {
     background: #ffcc00;
     color: black;
@@ -146,7 +212,6 @@ button {
     transform: scale(1.05);
 }
 
-/* === Tombol Hapus Chat === */
 #clear-chat-btn {
     background: #ff4d4d;
     color: white;
@@ -160,7 +225,6 @@ button {
     transform: scale(1.05);
 }
 
-/* === Tombol Logout === */
 #logout-btn {
     background: #ff0606;
     color: white;
@@ -183,6 +247,13 @@ button {
     border-radius: 10px;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    animation: logoFloat 2s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
 }
 
 #logo:hover {
@@ -190,7 +261,7 @@ button {
     box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* === Media Query untuk Responsivitas === */
+/* === Media Query === */
 @media (max-width: 600px) {
     #container {
         padding: 15px;
@@ -211,6 +282,7 @@ button {
     }
 }
 
+/* === Online Users === */
 #online-users {
     width: 100%;
     background: #f8f8f8;
@@ -218,6 +290,7 @@ button {
     border-radius: 10px;
     margin-bottom: 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s ease-in-out;
 }
 
 #users-list {
@@ -232,13 +305,34 @@ button {
     border-radius: 5px;
     margin: 5px 0;
     font-weight: bold;
+    animation: float 3s ease-in-out infinite;
+    transition: background-color 0.3s ease-in-out;
 }
 
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+#users-list li:hover {
+    background-color: #d0d0d0;
+    animation-play-state: paused;
+}
+
+/* === Typing Indicator === */
 #typing-indicator {
     font-size: 0.9rem;
     color: #666;
     margin-bottom: 10px;
     font-style: italic;
+    animation: typing 2s infinite;
+}
+
+@keyframes typing {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
 }
 
 /* Styling untuk Pesan Balasan */
@@ -299,48 +393,48 @@ button {
     padding-left: 10px;
 }
 
-/* === Animasi Logo === */
-@keyframes logoFloat {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0);
-    }
+/* === Emoji Picker === */
+#emoji-picker {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    display: none;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    height: 300px;
+    overflow: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
 }
 
-#logo:hover {
-    animation: logoFloat 2s ease-in-out infinite;
+#emoji-picker[style*="display: block"] {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* === Animasi untuk Pengguna Online === */
-@keyframes float {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-5px);
-    }
-    100% {
-        transform: translateY(0);
-    }
+.emoji-btn {
+    font-size: 1.5rem;
+    padding: 5px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
 
-#users-list li {
-    padding: 8px;
-    background: #e0e0e0;
-    border-radius: 5px;
-    margin: 5px 0;
-    font-weight: bold;
-    animation: float 3s ease-in-out infinite; /* Animasi float selama 3 detik, berulang terus */
-    transition: background-color 0.3s ease-in-out;
+.emoji-btn:hover {
+    transform: scale(1.2);
 }
 
-/* Efek hover untuk item pengguna online */
-#users-list li:hover {
-    background-color: #d0d0d0;
-    animation-play-state: paused; /* Menghentikan animasi saat hover */
+@media (max-width: 600px) {
+    #emoji-picker {
+        width: 200px;
+        height: 250px;
+        bottom: 10px;
+        right: 10px;
+    }
 }
