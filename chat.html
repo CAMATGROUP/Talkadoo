@@ -6,9 +6,9 @@
     <title>Talkadoo</title>
     <link rel="icon" type="image/jpeg" href="talkadoo.jpeg">
     <link rel="stylesheet" href="chat.css">
-    <script type="module" src="app.js"></script>
-    <script type="module" src="auth.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+    <script type="module" src="app.js" defer></script>
+    <script type="module" src="auth.js" defer></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" async></script>
 </head>
 <body>
 
@@ -23,12 +23,12 @@
             <h3>Pengguna Online</h3>
             <ul id="users-list"></ul>
         </div>
-        <button id="change-name-btn">Ganti Nama</button>
-        <button id="clear-chat-btn">Hapus Semua Chat</button>
-        <button id="logout-btn">Logout</button>
+        <button id="change-name-btn" aria-label="Ganti nama pengguna">Ganti Nama</button>
+        <button id="clear-chat-btn" aria-label="Hapus semua pesan">Hapus Semua Chat</button>
+        <button id="logout-btn" aria-label="Keluar dari aplikasi">Logout</button>
     
         <!-- Kotak Chat -->
-        <div id="chat-box" style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto;">
+        <div id="chat-box">
             <p>Memuat pesan...</p>
         </div>
 
@@ -39,12 +39,12 @@
             <div id="reply-preview" style="display: none;">
                 <strong>Membalas:</strong>
                 <span id="reply-message"></span>
-                <button id="cancel-reply-btn">Batal</button>
+                <button id="cancel-reply-btn" aria-label="Batal membalas">Batal</button>
             </div>
-            <input type="text" id="input-box" placeholder="Ketik pesan...">
-            <button id="emoji-btn">😀</button>
+            <input type="text" id="input-box" placeholder="Ketik pesan..." aria-label="Kotak input pesan">
+            <button id="emoji-btn" aria-label="Buka pemilih emoji">😀</button>
             <emoji-picker id="emoji-picker"></emoji-picker>
-            <button id="send-btn">Kirim</button>
+            <button id="send-btn" aria-label="Kirim pesan">Kirim</button>
         </div>
     </div>
 
