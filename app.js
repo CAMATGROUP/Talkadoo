@@ -202,11 +202,15 @@ onSnapshot(chatQuery, async (snapshot) => {
             }
         }
 
-        // 🔹 Tambahkan Tombol Reply
-        const replyBtn = document.createElement("button");
-        replyBtn.textContent = "Reply";
-        replyBtn.classList.add("reply-btn");
-        messageDiv.appendChild(replyBtn);
+       // 🔹 Tambahkan Tombol Reply dengan SVG
+    const replyBtn = document.createElement("div");
+    replyBtn.innerHTML = `
+    <svg class="reply-btn" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 9l-3 3 3 3"></path>
+        <path d="M13 12h7"></path>
+    </svg>
+`;
+messageDiv.appendChild(replyBtn);
 
         replyBtn.addEventListener("click", () => {
             // Tampilkan pesan yang dibalas di reply-preview
@@ -301,4 +305,56 @@ if (emojiBtn && emojiPicker) {
             emojiPicker.style.display = "none";
         }
     });
+}
+
+// 🔹 Kirim Pesan dengan Tombol Enter
+inputBox.addEventListener("keydown", async (event) => {
+    if (event.key === "Enter" && !event.shiftKey) { // Pastikan Shift + Enter tidak mengirim pesan
+        event.preventDefault(); // Mencegah perilaku default (seperti membuat baris baru)
+
+        // Panggil fungsi yang sama seperti saat tombol Send diklik
+        const text = inputBox.value.trim();
+        const user = auth.currentUser;
+
+        if (text && user) {
+            const messageData = {
+                message: text,
+                user: user.uid,
+                userName: user.displayName || user.email,
+                timestamp: new Date()
+            };
+
+            // Jika ada pesan yang dibalas, tambahkan ID pesan tersebut
+            if (window.replyToMessageId) {
+                messageData.replyTo = window.replyToMessageId;
+            }
+
+            await addDoc(chatCollection, messageData);
+            inputBox.value = "";
+
+            // Reset reply preview
+            replyPreview.style.display = "none";
+            window.replyToMessageId = null;
+        }
+    }
+});
+
+inputBox.addEventListener("keydown", async (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault(); // Mencegah baris baru jika hanya Enter
+        // Kode untuk mengirim pesan
+    } else if (event.key === "Enter" && event.shiftKey) {
+        // Biarkan pengguna membuat baris baru dengan Shift + Enter
+        return;
+    }
+});
+
+function addMessage(message, isReceived) {
+    const chatBox = document.getElementById('chat-box');
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+    messageElement.classList.add(isReceived ? 'received' : 'sent');
+    messageElement.textContent = message;
+    chatBox.appendChild(messageElement);
+    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll ke bawah
 }
