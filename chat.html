@@ -9,6 +9,7 @@
     <script type="module" src="app.js" defer></script>
     <script type="module" src="auth.js" defer></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js" async></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -31,22 +32,24 @@
         <div id="chat-box">
             <p>Memuat pesan...</p>
         </div>
-
+    
         <div id="typing-indicator"></div>
-        
+    
+        <!-- Reply Preview -->
+        <div id="reply-preview" style="display: none;">
+            <i class="fas fa-reply"></i> <!-- Ikon reply -->
+            <strong>Membalas:</strong>
+            <span id="reply-message" class="reply-text"></span>
+            <button id="cancel-reply-btn" aria-label="Batal membalas">Batal</button>
+        </div>
+    
         <!-- Input Pesan -->
         <div id="input-area">
-            <div id="reply-preview" style="display: none;">
-                <strong>Membalas:</strong>
-                <span id="reply-message"></span>
-                <button id="cancel-reply-btn" aria-label="Batal membalas">Batal</button>
-            </div>
-            <input type="text" id="input-box" placeholder="Ketik pesan..." aria-label="Kotak input pesan">
-            <button id="emoji-btn" aria-label="Buka pemilih emoji">😀</button>
+            <textarea id="input-box" placeholder="Ketik pesan..." aria-label="Kotak input pesan" rows="2"></textarea>
+            <button id="emoji-btn" class="emoji-button" aria-label="Buka pemilih emoji">😀</button>
             <emoji-picker id="emoji-picker"></emoji-picker>
-            <button id="send-btn" aria-label="Kirim pesan">Kirim</button>
+            <button id="send-btn" class="send-button" aria-label="Kirim pesan">Kirim</button>
         </div>
     </div>
-
 </body>
 </html>
