@@ -77,9 +77,8 @@ body::-webkit-scrollbar-thumb:hover {
     box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
                 inset -5px -5px 10px rgba(255, 255, 255, 0.7);
     margin-bottom: 15px;
-    animation: slideIn 0.5s ease-in-out;
-    scrollbar-width: thin; /* Untuk Firefox */
-    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); /* Untuk Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 /* === Custom Scroll Bar === */
@@ -118,6 +117,7 @@ body::-webkit-scrollbar-thumb:hover {
     opacity: 0;
     transform: translateY(20px);
     animation: messageAppear 0.3s ease-in-out forwards;
+    white-space: pre-wrap;
 }
 
 @keyframes messageAppear {
@@ -151,7 +151,7 @@ body::-webkit-scrollbar-thumb:hover {
     width: 100%;
     margin-top: 15px;
     gap: 10px;
-    animation: slideUp 0.5s ease-in-out;
+    align-items: center;
 }
 
 @keyframes slideUp {
@@ -159,21 +159,48 @@ body::-webkit-scrollbar-thumb:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* === Scrollbar untuk Input Box === */
 #input-box {
-    flex: 1;
+    flex-grow: 1;
     padding: 12px;
     border-radius: 10px;
-    border: none;
-    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.1),
-                inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+    border: 1px solid #ccc;
     font-size: var(--font-size);
     outline: none;
-    transition: box-shadow 0.3s ease-in-out;
+    resize: none; /* Mencegah resize manual */
+    min-height: 40px; /* Tinggi minimum */
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    overflow-y: auto; /* Aktifkan scrollbar vertikal jika diperlukan */
+}
+
+/* Scrollbar untuk WebKit (Chrome, Safari, Edge) */
+#input-box::-webkit-scrollbar {
+    width: 8px; /* Lebar scrollbar */
+}
+
+#input-box::-webkit-scrollbar-track {
+    background: var(--scrollbar-track); /* Warna track */
+    border-radius: 10px; /* Sudut bulat pada track */
+}
+
+#input-box::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb); /* Warna thumb */
+    border-radius: 10px; /* Sudut bulat pada thumb */
+}
+
+#input-box::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color); /* Warna thumb saat dihover */
+}
+
+/* Scrollbar untuk Firefox */
+#input-box {
+    scrollbar-width: thin; /* Lebar scrollbar */
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); /* Warna thumb dan track */
 }
 
 #input-box:focus {
-    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
-                inset -5px -5px 10px rgba(255, 255, 255, 0.7);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(131, 96, 195, 0.5);
 }
 
 /* === Buttons === */
@@ -198,17 +225,27 @@ button {
     100% { transform: scale(1); }
 }
 
-#send-btn {
-    background: var(--secondary-color);
+.send-button {
+    background-color: var(--primary-color);
     color: white;
-    max-width: 80px;
-    padding: 8px;
-    font-size: 0.9rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    font-weight: bold;
+    padding: 10px 20px; /* Padding yang lebih kecil */
+    min-height: 40px; /* Tinggi minimum */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease-in-out;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0; /* Mencegah tombol menyusut */
+    width: auto; /* Lebar menyesuaikan konten */
 }
 
-#send-btn:hover {
-    background: #27a882;
-    transform: scale(1.05);
+.send-button:hover {
+    background-color: #6a11cb;
 }
 
 #change-name-btn {
@@ -357,7 +394,7 @@ button {
     padding-left: 8px;
 }
 
-/* === Styling untuk Reply Preview === */
+/* === Reply Preview === */
 #reply-preview {
     background: #f0f0f0;
     padding: 10px;
@@ -367,13 +404,20 @@ button {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    max-width: 100%; /* Membatasi lebar maksimum */
-    overflow: hidden; /* Menyembunyikan teks yang melebihi container */
+    max-width: 100%;
+    overflow: hidden;
 }
 
 #reply-preview strong {
-    color: #6a11cb;
-    white-space: nowrap; /* Mencegah teks strong wrap */
+    color: var(--primary-color);
+    white-space: nowrap;
+}
+
+#reply-message {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #reply-preview p {
@@ -429,17 +473,21 @@ button {
     transform: translateY(0);
 }
 
-.emoji-btn {
-    font-size: 1.5rem;
-    padding: 5px;
-    border: none;
-    background: none;
+.emoji-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
-    transition: transform 0.2s ease-in-out;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.emoji-btn:hover {
-    transform: scale(1.2);
+.emoji-button:hover {
+    background-color: #e0e0e0;
 }
 
 @media (max-width: 600px) {
@@ -456,5 +504,40 @@ button {
     * {
         animation: none !important;
         transition: none !important;
+    }
+}
+
+.reply-btn {
+    font-size: 0.8rem;
+    color: black;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    animation: blink 2s infinite; /* Menambahkan animasi */
+}
+
+.reply-btn:hover {
+    color: var(--secondary-color);
+    transform: scale(1.5);
+}
+
+/* === Media Query === */
+@media (max-width: 600px) {
+    #container {
+        padding: 15px;
+    }
+
+    #chat-box {
+        height: 60vh;
+        max-height: none;
+    }
+
+    #input-box {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    button {
+        font-size: 0.9rem;
     }
 }
