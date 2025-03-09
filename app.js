@@ -97,7 +97,8 @@ if (sendBtn) {
                 message: text,
                 user: user.uid,
                 userName: user.displayName || user.email,
-                timestamp: new Date()
+                timestamp: new Date(),
+                read: false
             };
 
             // Jika ada pesan yang dibalas, tambahkan ID pesan tersebut
@@ -164,33 +165,28 @@ onSnapshot(chatQuery, async (snapshot) => {
     for (const docSnapshot of snapshot.docs) {
         const data = docSnapshot.data();
         const messageId = docSnapshot.id;
+        const isOwnMessage = data.user === userId;
 
         const messageDiv = document.createElement("div");
-        messageDiv.classList.add("message");
-
-        if (data.user === userId) {
-            messageDiv.classList.add("sent");
-        } else {
-            messageDiv.classList.add("received");
-        }
+        messageDiv.classList.add("message", isOwnMessage ? "sent" : "received");
 
         // 🔹 Tambahkan Nama Pengguna
         const userNameText = document.createElement("strong");
         userNameText.textContent = data.userName || "Anonim";
         messageDiv.appendChild(userNameText);
 
-         // 🔹 Tambahkan Waktu Pengiriman
+        // 🔹 Tambahkan Waktu Pengiriman
         const timeText = document.createElement("small");
         timeText.textContent = ` (${formatTime(data.timestamp)})`;
         timeText.classList.add("time-stamp");
-        messageDiv.appendChild(timeText); // Tambahkan ini untuk menampilkan timestamp
+        messageDiv.appendChild(timeText);
 
-        // 🔹 Tampilkan Pesan Teks
+        // 🔹 Tambahkan Pesan
         const messageText = document.createElement("span");
         messageText.textContent = `: ${data.message}`;
         messageDiv.appendChild(messageText);
 
-        // 🔹 Tampilkan Pesan Balasan
+        // 🔹 Tampilkan Pesan Balasan (Jika Ada)
         if (data.replyTo) {
             const replyToMessage = await getDoc(doc(db, "chats", data.replyTo));
             if (replyToMessage.exists()) {
@@ -202,27 +198,31 @@ onSnapshot(chatQuery, async (snapshot) => {
             }
         }
 
-       // 🔹 Tambahkan Tombol Reply dengan SVG
-    const replyBtn = document.createElement("div");
-    replyBtn.innerHTML = `
-    <svg class="reply-btn" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10 9l-3 3 3 3"></path>
-        <path d="M13 12h7"></path>
-    </svg>
-`;
-messageDiv.appendChild(replyBtn);
+        // Event untuk Klik Kanan (Desktop)
+messageDiv.addEventListener("contextmenu", (event) => {
+    event.preventDefault(); // Mencegah menu klik kanan bawaan
+    replyMessage.textContent = data.message;
+    replyPreview.style.display = "block";
+    window.replyToMessageId = messageId;
+});
 
-        replyBtn.addEventListener("click", () => {
-            // Tampilkan pesan yang dibalas di reply-preview
-            replyMessage.textContent = data.message; // Pesan yang dibalas
-            replyPreview.style.display = "block";
+// Event untuk Geser Kanan (Mobile)
+let touchStartX = 0;
+messageDiv.addEventListener("touchstart", (event) => {
+    touchStartX = event.touches[0].clientX;
+});
 
-            // Simpan ID pesan yang dibalas di variabel global
-            window.replyToMessageId = messageId;
-        });
+messageDiv.addEventListener("touchend", (event) => {
+    let touchEndX = event.changedTouches[0].clientX;
+    if (touchEndX - touchStartX > 50) { // Jika geser ke kanan lebih dari 50px
+        replyMessage.textContent = data.message;
+        replyPreview.style.display = "block";
+        window.replyToMessageId = messageId;
+    }
+});
 
-        // 🔥 Double Tap untuk Menghapus Pesan
-        if (data.user === userId) {
+        // 🔥 Double Tap untuk Hapus Pesan
+        if (isOwnMessage) {
             messageDiv.addEventListener("dblclick", async () => {
                 const confirmDelete = confirm("Apakah Anda yakin ingin menghapus pesan ini?");
                 if (confirmDelete) {
@@ -231,10 +231,23 @@ messageDiv.appendChild(replyBtn);
             });
         }
 
+        // 🔹 Tambahkan Centang Pesan
+        if (isOwnMessage) {
+            const checkMark = document.createElement("span");
+            checkMark.classList.add("check-mark");
+            checkMark.textContent = data.read ? " ✔✔" : " ✔";
+            messageDiv.appendChild(checkMark);
+        }
+
         chatBox.appendChild(messageDiv);
+
+        // **Jika pesan diterima dan belum dibaca, tandai sebagai dibaca**
+        if (!isOwnMessage && !data.read) {
+            await updateDoc(doc(db, "chats", messageId), { read: true });
+        }
     }
 
-    chatBox.scrollTop = chatBox.scrollHeight;
+    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll ke bawah
 });
 
 // 🔹 Fungsi untuk Membatalkan Balasan
@@ -338,23 +351,3 @@ inputBox.addEventListener("keydown", async (event) => {
         }
     }
 });
-
-inputBox.addEventListener("keydown", async (event) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault(); // Mencegah baris baru jika hanya Enter
-        // Kode untuk mengirim pesan
-    } else if (event.key === "Enter" && event.shiftKey) {
-        // Biarkan pengguna membuat baris baru dengan Shift + Enter
-        return;
-    }
-});
-
-function addMessage(message, isReceived) {
-    const chatBox = document.getElementById('chat-box');
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('message');
-    messageElement.classList.add(isReceived ? 'received' : 'sent');
-    messageElement.textContent = message;
-    chatBox.appendChild(messageElement);
-    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll ke bawah
-}
